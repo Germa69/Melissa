@@ -34,12 +34,13 @@ Lưu ý: B2 ổ C hay ổ D tùy thuộc vào chỗ ông lưu trữ xampp
 # Sử dụng migration và seeder để đẩy dữ liệu lên CSDL
 ? Lưu ý: Phải nhập tên database trong file .env
 
+```
 Cách 1: php artisan migrate => Chỉ đẩy bảng lên CSDL
 Cách 2: php artisan migrate --seed => Đẩy cả bảng lẫn dữ liệu fake được lên CSDL
 Cách 3: php artisan migrate:refresh --seed => Load lại bảng lẫn dữ liệu fake được lên CSDL
 Cách 4: php artisan db:seed => Nó sẽ fake tất cả các seeder tạo dữ liệu và đẩy lên CSDL
 Cách 5: php artisan db:seed --class="Tên seeder" => Nó sẽ chỉ định 1 seeder tạo dữ liệu và đẩy lên CSDL
-
+```
 # Thêm 1 số thư viện
 
 ```
@@ -71,6 +72,10 @@ Mật khẩu dùng phương thức Hash để mã hóa mật khẩu
 ```
 Thêm chỉnh sửa profile, đổi mật khẩu,...
 ```
+
+# Một số nguồn website lấy xe về thêm vào CSDL
+
+1. https://tinbanxe.vn/
 
 Note: 
     - Một số chức năng kia tôi sẽ cố gắng update nhé!!
