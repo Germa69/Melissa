@@ -64,6 +64,7 @@ class CustomerController
             Session::put('anh_khach_hang', $customer->anh_khach_hang);
             Session::put('so_dien_thoai', $customer->sdt);
             Session::put('dia_chi', $customer->dia_chi);
+            Session::put('so_CMND', $customer->so_CMND);
 
             Toastr::success('Đăng nhập thành công', 'Success');
             return redirect()->route('home_page');

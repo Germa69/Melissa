@@ -53,7 +53,7 @@
                 </a>
                 <ul aria-expanded="false">
                     <li>
-                        <a href="{{ route('contract.view_all') }}">Danh sách hợp đồng</a>
+                        <a href="{{ route('contract.manage_contract') }}">Danh sách hợp đồng</a>
                     </li>
                 </ul>
             </li>

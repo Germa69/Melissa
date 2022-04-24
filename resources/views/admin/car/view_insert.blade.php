@@ -45,20 +45,16 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
+                                    <input type="number" name="w" class="form-control input-default" min="1"
+                                        placeholder="Số lượng">
+                                </div>
+                                <div class="form-group">
                                     <input type="number" name="so_cho_ngoi" class="form-control input-default" min="1"
                                         max="100" placeholder="Số chỗ ngồi">
                                 </div>
                                 <div class="form-group">
                                     <input type="text" name="tien_phat" class="form-control input-default"
                                         placeholder="Tiền phạt">
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control default-select" name="tinh_trang">
-                                        <option value="" disabled selected>Tình trạng xe</option>
-                                        <option value="0">Còn xe</option>
-                                        <option value="1">Có người khác thuê rồi</option>
-                                        <option value="2">Đang bảo dưỡng</option>
-                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <textarea name="mo_ta" class="form-control" rows="4" id="comment" placeholder="Nhập nội dung..."></textarea>

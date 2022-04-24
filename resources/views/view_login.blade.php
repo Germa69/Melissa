@@ -8,11 +8,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Đăng nhập</title>
-    <link rel="icon" href="{{ asset('public/common/icon/Mercedes-Benz.png') }}" type="image/png" sizes="16x16">
+    <link rel="icon" href="{{ asset('public/common/icon/icons.png') }}" type="image/png" sizes="16x16">
     <link rel="stylesheet" href="{{ asset('public/backend/css/login.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typicons/2.1.2/typicons.min.css" integrity="sha512-/O0SXmd3R7+Q2CXC7uBau6Fucw4cTteiQZvSwg/XofEu/92w6zv5RBOdySvPOQwRsZB+SFVd/t9T5B/eg0X09g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{!! asset('public/backend/css/toastr/toastr.min.css') !!}">
-    
+
     <script src="{{ asset('public/backend/js/toastr/jquery.min.js') }}"></script>
     <script src="{{ asset('public/backend/js/toastr/toastr.min.js') }}"></script>
 </head>

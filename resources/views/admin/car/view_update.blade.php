@@ -44,6 +44,10 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
+                                    <input type="number" name="so_luong" class="form-control input-default" min="1"
+                                        max="100" placeholder="Số lượng" value="{{ $car->so_luong }}">
+                                </div>
+                                <div class="form-group">
                                     <input type="number" name="so_cho_ngoi" class="form-control input-default" min="1"
                                         max="100" placeholder="Số chỗ ngồi" value="{{ $car->so_cho_ngoi }}">
                                 </div>
@@ -52,12 +56,21 @@
                                         placeholder="Tiền phạt" value="{{ $car->tien_phat }}">
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control default-select" name="tinh_trang">
-                                        <option value="0" {{ $car->tinh_trang == 0 ? 'selected' : '' }}>Còn xe</option>
-                                        <option value="1" {{ $car->tinh_trang == 1 ? 'selected' : '' }}>Xe đang được thuê</option>
-                                        <option value="2" {{ $car->tinh_trang == 2 ? 'selected' : '' }}>Đang bảo dưỡng
-                                        </option>
-                                    </select>
+                                    @if ($car->so_luong_da_thue != 0)
+                                        <select class="form-control default-select" name="tinh_trang">
+                                            <option value="1" {{ $car->tinh_trang == 1 ? 'selected' : '' }}>Xe đang được
+                                                thuê</option>
+                                            {{-- <option value="2" {{ $car->tinh_trang == 2 ? 'selected' : '' }}>Đang bảo dưỡng
+                                            </option> --}}
+                                        </select>
+                                    @else
+                                        <select class="form-control default-select" name="tinh_trang">
+                                            <option value="1" {{ $car->tinh_trang == 1 ? 'selected' : '' }}>Xe đang được
+                                                thuê</option>
+                                            <option value="2" {{ $car->tinh_trang == 2 ? 'selected' : '' }}>Bảo dưỡng xe
+                                            </option>
+                                        </select>
+                                    @endif
                                 </div>
                                 <div class="form-group">
                                     <textarea name="mo_ta" class="form-control" rows="4" id="comment"

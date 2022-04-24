@@ -6,102 +6,150 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Models\Contract;
+use App\Models\Customer;
 use App\Models\Car;
 
 
 class ContractController extends Controller
 {
-    public function view_all(Request $rq){
-        $contracts = Contract::with('car')->with('customer')->get();
+    public function manage_contract(Request $rq){
+        if ($rq->ajax()) {
+            $ngay_thue    = $rq->ngay_thue;
+            $ngay_tra     = $rq->ngay_tra;
+            $tinh_trang   = $rq->tinh_trang;
 
-        return view('admin.contract.view_all',[
-            'contracts' => $contracts,
-        ]);
+            if (!empty($ngay_thue) && !empty($ngay_tra) && !empty($tinh_trang)) {
+                $contracts = Contract::with('car')
+                ->with('customer')
+                ->whereBetween('ngay_thue', [$ngay_thue, $ngay_tra])
+                ->where('tinh_trang', $tinh_trang)
+                ->get();
+            } else if (!empty($ngay_thue) && !empty($ngay_tra)) {
+                $contracts = Contract::with('car')
+                ->with('customer')
+                ->whereBetween('ngay_thue', [$ngay_thue, $ngay_tra])
+                ->get();
+            } else if (!empty($tinh_trang)) {
+                $contracts = Contract::with('car')
+                ->with('customer')
+                ->where('tinh_trang', $tinh_trang)
+                ->get();
+            } else {
+                $contracts = Contract::with('car')
+                ->with('customer')
+                ->get();
+            }
+
+            return datatables()->of($contracts)
+                ->addIndexColumn()
+                ->addColumn('action', function ($contract) {
+                    return
+                        '<a href="'. route('contract.update_contract', ['ma' => $contract->ma]) .'" class="text-white">
+                            <button type="button" class="btn btn-grd-primary btn-sm">
+                                <i class="fa fa-edit" style="font-size: 24px"></i>
+                            </button>
+                        </a>
+                    ';
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+        return view('admin.contract.manage_contract');
     }
 
-    public function view_insert(){
-        $array_hop_dong = Contract::all();
-        return 	view('view_hop_dong.view_insert', [
-            'array_hop_dong'=> $array_hop_dong
-        ]);
-
-    }
-    public function process_insert(Request $rq)
-    {
-        Contract::with('Car')->create([
-            'ngay_thue' => $rq->ngay_thue,
-            'ngay_tra'=>$rq->ngay_tra,
-            'ma_khach_hang'=>$rq->session()->get('ma_khach_hang'),
-            'ma_Car'=>$rq->ma_Car,
-            'gia_thue_Car'=> Car::find($rq->ma_Car)->gia_thue_Car,
-            'tien_phat'=> 0,
-            'tinh_trang'=>0,
-        ]);
-        Car::find($rq->ma_Car)->update(['tinh_trang'=>1]);
-
-
-
-        return redirect()->route('view_khach_hang.header')->with('sucsess','Thêm thành công');
-    }
-
-    public function delete($ma)
-    {
-        Contract::find($ma)->delete();
-        return redirect()->route('view_hop_dong.view_all')->with('success','Bạn xoá công ty thành công rồi');
-    }
-
-    public function view_update($ma)
+    public function update_contract($ma)
     {
         $contract = Contract::find($ma);
-        return view('admin.contract.view_update', ['contract' => $contract]);
+        $customer_id = $contract->ma_khach_hang;
+        $car_id = $contract->ma_xe;
+        $customer = Customer::where('ma', $customer_id)->first();
+        $car = Car::where('ma', $car_id)->first();
+
+        return view('admin.contract.update_contract', [
+            'contract' => $contract,
+            'customer' => $customer,
+            'car' => $car,
+        ]);
     }
 
-    public function process_update(Request $rq, $ma)
+    public function confirm_booking(Request $rq) {
+        $data = $rq->all();
+
+        $checkCusCar = Car::where([
+            ['ma', $data['ma_xe']],
+            ['khach_hang_da_dat', 'LIKE', '%'.$data['ma_khach_hang'].'%'],
+        ])->first();
+
+        if ($checkCusCar) {
+            Toastr::error('Bạn đang có hợp đồng xe này, vui lòng trả xe để có thể thuê xe', 'Error');
+        } else {
+            $contract = new Contract();
+            $contract->ma_khach_hang = $data['ma_khach_hang'];
+            $contract->ma_xe = $data['ma_xe'];
+            $contract->ngay_thue = $data['ngay_thue'];
+            $contract->ngay_tra = $data['ngay_tra'];
+            $contract->so_luong = $data['so_luong'];
+            $contract->so_ngay_thue = $data['so_ngay_thue'];
+            $contract->gia_thue_xe = $data['gia_thue_xe'];
+            $contract->tien_phat = $data['tien_phat'];
+            $contract->tien_coc = $data['tien_coc'];
+            $contract->save();
+            Toastr::success('Bạn đã đặt xe thành công', 'Success');
+        }
+    }
+
+    public function update_status_contract(Request $rq)
     {
-        try {
-            DB::beginTransaction();
-            Contract::find($ma)->update([
-                'ngay_tra_thuc_te' => $rq->ngay_tra_thuc_te,
-            ]);
-            DB::commit();
-            Toastr::success('Cập nhật hợp đồng thành công', 'Success');
-            return redirect()->route('contract.view_all');
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            Toastr::error('Cập nhật hợp đồng thất bại', 'Error');
-            return redirect()->route('contract.view_all');
+        $data = $rq->all();
+
+        $contract               = Contract::find($data['contract_id']);
+        $contract->tinh_trang   = $data['contract_status'];
+        $contract->save();
+
+        if($contract->tinh_trang == 2){
+            $car                    = Car::find($data['car_id']);
+
+            $car->khach_hang_da_dat = $data['customer_id'].','.$car->khach_hang_da_dat;
+
+            $car_qty                = $car->so_luong;
+            $car_qty_rent           = $car->so_luong_da_thue;
+
+            $car_remain             = $car_qty  - $data['qty'];
+            $car->so_luong          = $car_remain;
+            $car->so_luong_da_thue  = $car_qty_rent + $data['qty'];
+            $car->save();
+
+        } else if ($contract->tinh_trang == 3) {
+            $car                    = Car::find($data['car_id']);
+
+            $khach_hang_da_dat      = $car->khach_hang_da_dat;
+
+            $length = strlen($khach_hang_da_dat);
+
+            if ($length > 0) {
+	            $result = substr($khach_hang_da_dat, 0, -2);
+            }
+
+            $car->khach_hang_da_dat = $result;
+
+            $car_qty                = $car->so_luong;
+            $car_qty_rent           = $car->so_luong_da_thue;
+
+            $car_remain             = $car_qty  + $data['qty'];
+            $car->so_luong          = $car_remain;
+            $car->so_luong_da_thue  = $car_qty_rent - $data['qty'];
+            $car->save();
         }
     }
 
-    public function approval($ma){
-        try {
-            DB::beginTransaction();
-            Contract::find($ma)->update([
-                'tinh_trang' => 1
-            ]);
-            DB::commit();
-            Toastr::success('Duyệt hợp đồng thành công', 'Success');
-            return redirect()->route('contract.view_all');
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            Toastr::error('Duyệt hợp đồng thất bại', 'Error');
-            return redirect()->route('contract.view_all');
-        }
-    }
+    public function update_date_contract(Request $rq)
+    {
+        $data = $rq->all();
 
-    public function cancel($ma){
-        try {
-            DB::beginTransaction();
-            Contract::find($ma)->update([
-                'tinh_trang' => 2
-            ]);
-            DB::commit();
-            Toastr::success('Hủy hợp đồng thành công', 'Success');
-            return redirect()->route('contract.view_all');
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            Toastr::error('Hủy hợp đồng thất bại', 'Error');
-            return redirect()->route('contract.view_all');
-        }
+        $contract                     = Contract::find($data['ma']);
+        $contract->ngay_tra_thuc_te   = $data['ngay_tra_thuc_te'];
+        $contract->so_ngay_tre_hen    = $data['so_ngay_tre_hen'];
+        $contract->save();
     }
 }

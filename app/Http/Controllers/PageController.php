@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use App\Models\Car;
 
 class PageController extends Controller
@@ -35,9 +36,14 @@ class PageController extends Controller
         $searchText = $rq->searchText;
         $cars = Car::with('brand')->where('ten_xe','like', '%'.$searchText.'%')->paginate(6);
 
+        $checkUserCar = Car::where([
+            ['khach_hang_da_dat', 'LIKE', '%'.Session::get('ma_khach_hang').'%']
+        ])->first();
+
     	return view('pages.car.fleet',[
     	    'searchText' => $searchText,
             'cars' => $cars,
+            'checkUserCar' => $checkUserCar,
         ]);
     }
 }

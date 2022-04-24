@@ -9,7 +9,7 @@
                             <div class="col-md-6 col-sm-12">
                                 <h1>Bạn đang khó khăn với việc tìm kiếm các mẫu xe ?</h1>
                                 <h3>Hãy tham khảo qua về trang web của chúng tôi.</h3>
-                                <a href="{{ route('view_khach_hang.fleet') }}"
+                                <a href="{{ route('pages.fleet') }}"
                                     class="section-btn btn btn-default">Fleet</a>
                             </div>
                         </div>
@@ -23,7 +23,7 @@
                                 <h1>Bạn đang chán chiếc xe cũ kĩ ở nhà của bạn ?</h1>
                                 <h3>Chúng tôi chuyên cung cấp những chiếc xe mới mẻ và theo sát nhu cầu của thị trường.
                                 </h3>
-                                <a href="{{ route('view_khach_hang.fleet') }}"
+                                <a href="{{ route('pages.fleet') }}"
                                     class="section-btn btn btn-default">Fleet</a>
                             </div>
                         </div>
@@ -36,7 +36,7 @@
                             <div class="col-md-6 col-sm-12">
                                 <h1>Bạn đang cần một chiếc xe sang trọng để ra mắt bạn bè và đối tác ?</h1>
                                 <h3>Hãy liên hệ với chúng tôi. Chúng tôi đảm bảo sẽ không làm bạn thất vọng.</h3>
-                                <a href="{{ route('view_khach_hang.fleet') }}"
+                                <a href="{{ route('pages.fleet') }}"
                                     class="section-btn btn btn-default">Fleet</a>
                             </div>
                         </div>

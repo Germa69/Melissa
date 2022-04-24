@@ -35,10 +35,10 @@ class CarController
 
                 $data['ten_xe'] = $rq->ten_xe;
                 $data['ma_hang_xe'] = $rq->ma_hang_xe;
+                $data['so_luong'] = $rq->so_luong;
                 $data['gia_thue_xe'] = $rq->gia_thue_xe;
                 $data['so_cho_ngoi'] = $rq->so_cho_ngoi;
                 $data['tien_phat'] = $rq->tien_phat;
-                $data['tinh_trang'] = $rq->tinh_trang;
                 $data['mo_ta'] = $rq->mo_ta;
 
                 $get_image = $rq->file('file');
@@ -54,7 +54,7 @@ class CarController
                     $get_image->move($path, $new_image);
                     $data['anh_xe']   = $new_image;
                 }
-        
+
                 Car::create($data);
 
                 DB::commit();
@@ -78,7 +78,7 @@ class CarController
         $brands = Brand::all();
 
         return view('admin.car.view_update', [
-            'car' => $car, 
+            'car' => $car,
             'brands' => $brands
         ]);
     }
@@ -91,6 +91,7 @@ class CarController
 
             $data['ten_xe'] = $rq->ten_xe;
             $data['ma_hang_xe'] = $rq->ma_hang_xe;
+            $data['so_luong'] = $rq->so_luong;
             $data['gia_thue_xe'] = $rq->gia_thue_xe;
             $data['so_cho_ngoi'] = $rq->so_cho_ngoi;
             $data['tien_phat'] = $rq->tien_phat;
@@ -114,7 +115,7 @@ class CarController
                 unlink($path.$car->anh_xe);
 
                 $car->update($data);
-    
+
                 DB::commit();
                 Toastr::success('Cập nhật xe thành công','Success');
                 return redirect()->route('car.view_all');

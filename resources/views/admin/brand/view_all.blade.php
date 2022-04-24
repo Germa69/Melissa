@@ -60,8 +60,8 @@
                                                 <div class="d-flex">
                                                     <a href="{{ route('brand.view_update', ['ma' => $brand->ma]) }}" class="btn btn-primary shadow btn-xs sharp mr-1"><i
                                                         class="fa fa-pencil"></i></a>
-                                                
-                                                    @if (Session::get('cap_do') == 0) 
+
+                                                    @if (Session::get('cap_do') == 0)
                                                         <button type="button"
                                                                 class="btn btn-danger shadow btn-xs sharp"
                                                                 style="outline: none"
@@ -96,7 +96,7 @@
     <!-- Datatable -->
     <script src="{{ asset('public/backend/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('public/backend/js/plugins-init/datatables.init.js') }}"></script>
-    
+
     <script>
         function notificationDelte() {
             swal("Hãy lên quyền Super Admin để thực hiện chức năng này!", "Vui lòng thử lại", "error");

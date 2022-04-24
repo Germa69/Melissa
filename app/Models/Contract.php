@@ -9,14 +9,19 @@ class Contract extends Model
     protected $table = 'hop_dong';
     protected $primaryKey = 'ma';
     protected $fillable = [
+        'ma_khach_hang',
+        'ma_xe',
         'ngay_thue',
         'ngay_tra',
         'ngay_tra_thuc_te',
+        'so_luong',
+        'so_ngay_thue',
+        'so_ngay_tre_hen',
         'gia_thue_xe',
         'tien_phat',
-        'ma_xe',
-        'ma_khach_hang',
-        'tinh_trang'
+        'tien_coc',
+        'tinh_trang',
+        'ly_do'
     ];
 
     public $timestamps = false;

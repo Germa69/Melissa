@@ -12,12 +12,15 @@ class Car extends Model
 
     protected $fillable = [
         'ten_xe',
-        'ma_hang_xe',
-        'gia_thue_xe',
         'anh_xe',
+        'ma_hang_xe',
+        'so_luong',
+        'so_luong_da_thue',
+        'gia_thue_xe',
         'so_cho_ngoi',
-        'tinh_trang',
         'tien_phat',
+        'tinh_trang',
+        'khach_hang_da_dat',
         'mo_ta'
     ];
 

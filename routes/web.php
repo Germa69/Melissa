@@ -22,7 +22,7 @@ Route::group(['middleware' => 'CheckAdminLogin'], function (){
             Route::get('/', 'CarController@view_all')->name('view_all');
             Route::get('view_insert', 'CarController@view_insert')->name('view_insert');
             Route::post('process_insert', 'CarController@process_insert')->name('process_insert');
-    
+
             Route::group(['middleware' => 'CheckSuperAdminLogin'], function (){
                 route::get('view_update/{ma}', 'CarController@view_update')->name('view_update');
                 route::post('process_update/{ma}', 'CarController@process_update')->name('process_update');
@@ -34,7 +34,7 @@ Route::group(['middleware' => 'CheckAdminLogin'], function (){
             Route::get('/', 'BrandController@view_all')->name('view_all');
             Route::get('view_insert', 'BrandController@view_insert')->name('view_insert');
             Route::post('process_insert', 'BrandController@process_insert')->name('process_insert');
-    
+
             Route::group(['middleware' => 'CheckSuperAdminLogin'], function (){
                 Route::get('view_update/{ma}', 'BrandController@view_update')->name('view_update');
                 Route::post('process_update/{ma}', 'BrandController@process_update')->name('process_update');
@@ -49,16 +49,10 @@ Route::group(['middleware' => 'CheckAdminLogin'], function (){
         });
 
         Route::group(['prefix' => 'contract', 'as'=> 'contract.'], function () {
-            Route::get('/', 'ContractController@view_all')->name('view_all');
-
-            Route::get('view_insert', 'ContractController@view_insert')->name('view_insert');
-            Route::post('process_insert','ContractController@process_insert')->name('process_insert');
-
-            Route::get('view_update/{ma}', 'ContractController@view_update')->name('view_update');
-            Route::post('process_update/{ma}','ContractController@process_update')->name('process_update');
-
-            Route::get('approval/{ma}', 'ContractController@approval')->name('approval');
-            Route::get('cancel/{ma}','ContractController@cancel')->name('cancel');
+            Route::get('/', 'ContractController@manage_contract')->name('manage_contract');
+            Route::get('update-contract/{ma}', 'ContractController@update_contract')->name('update_contract');
+            Route::post('update-status-contract' , 'ContractController@update_status_contract')->name('update_status_contract');
+            Route::post('update-date-contract' , 'ContractController@update_date_contract')->name('update_date_contract');
         });
 
         Route::group(['prefix'=> 'user', 'as'=> 'user.'],function () {
@@ -69,13 +63,13 @@ Route::group(['middleware' => 'CheckAdminLogin'], function (){
                 Route::get('/', 'AdminController@view_all')->name('view_all');
                 Route::get('view_insert', 'AdminController@view_insert')->name('view_insert');
                 Route::post('process_insert', 'AdminController@process_insert')->name('process_insert');
-        
+
                 Route::get('view_update/{ma}', 'AdminController@view_update')->name('view_update');
                 Route::post('process_update/{ma}', 'AdminController@process_update')->name('process_update');
                 Route::post('reissue_password', 'AdminController@reissue_password')->name('reissue_password');
                 Route::post('delete', 'AdminController@delete')->name('delete');
             });
-    
+
         });
     });
 });
@@ -105,6 +99,7 @@ Route::group(['prefix'=> 'customer', 'as' => 'customer.'], function() {
 
     Route::get('register', 'CustomerController@register')->name('register');
     Route::post('process_register','CustomerController@process_register')->name('process_register');
+    Route::post('confirm-booking', 'ContractController@confirm_booking')->name('confirm_booking');
 
     Route::group(['middleware' => 'CheckCustomerLogin'], function (){
         Route::get('profile/{ma}', 'CustomerController@profile')->name('profile');

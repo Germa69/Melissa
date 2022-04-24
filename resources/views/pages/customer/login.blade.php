@@ -5,11 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
+    <title>Đăng nhập</title>
+    <link rel="icon" href="{{ asset('public/common/icon/icons.png') }}" type="image/png" sizes="16x16">
     <link rel="stylesheet" href="{{ asset('public/frontend/login/css/main.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{!! asset('public/backend/css/toastr/toastr.min.css') !!}">
-    
+
     <script src="{{ asset('public/backend/js/toastr/jquery.min.js') }}"></script>
     <script src="{{ asset('public/backend/js/toastr/toastr.min.js') }}"></script>
 </head>

@@ -20,10 +20,11 @@
     <link rel="stylesheet" href="{{ asset('public/backend/vendor/chartist/css/chartist.min.css') }}">
     <link href="{{ asset('public/backend/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('public/backend/css/scrollbar.css') }}" rel="stylesheet">
-    <link href="{{ asset('public/backend/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('public/backend/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}"
+        rel="stylesheet">
     <link href="{{ asset('public/backend/vendor/owl-carousel/owl.carousel.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{!! asset('public/backend/css/toastr/toastr.min.css') !!}">
-    
+
     <script src="{{ asset('public/backend/js/toastr/jquery.min.js') }}"></script>
     <script src="{{ asset('public/backend/js/toastr/toastr.min.js') }}"></script>
     <link rel="stylesheet" type="text/css" href="{{ asset('public/backend/css/sweetalert2/sweetalert2.css') }}">
@@ -109,6 +110,8 @@
     <script src="{{ asset('public/backend/js/sweetalert2/sweetalert2.min.js') }}"></script>
     {{-- <script src="{{ asset('public/backend/js/styleSwitcher.js') }}"></script>
     <script src="{{ asset('public/backend/js/custom-pro.js')}}"></script> --}}
+
+
     @stack('scripts')
 </body>
 

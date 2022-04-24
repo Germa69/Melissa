@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>Car Rental Website</title>
+    <title>Melissa</title>
 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -17,8 +17,9 @@
     <link rel="stylesheet" href="{{ asset('public/frontend/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/frontend/css/owl.carousel.css') }}">
     <link rel="stylesheet" href="{{ asset('public/frontend/css/owl.theme.default.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/frontend/css/sweetalert2/sweetalert2.css') }}">
     <link rel="stylesheet" href="{!! asset('public/backend/css/toastr/toastr.min.css') !!}">
-    
+
     <script src="{{ asset('public/backend/js/toastr/jquery.min.js') }}"></script>
     <script src="{{ asset('public/backend/js/toastr/toastr.min.js') }}"></script>
 
@@ -46,7 +47,7 @@
     <!-- HOME -->
     <div id="wrapper">
         {!! Toastr::message() !!}
-        
+
         @yield('content')
     </div>
 
@@ -59,6 +60,7 @@
     <script src="{{ asset('public/frontend/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('public/frontend/js/smoothscroll.js') }}"></script>
     <script src="{{ asset('public/frontend/js/custom.js') }}"></script>
+    <script src="{{ asset('public/frontend/js/sweetalert2/sweetalert2.min.js') }}"></script>
 
     @stack('scripts')
 </body>

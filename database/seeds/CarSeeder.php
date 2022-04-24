@@ -17,6 +17,7 @@ class CarSeeder extends Seeder
             'ten_xe'        => 'Bugatti Chiron',
             'anh_xe'        => 'Bugatti_Chiron.png',
             'ma_hang_xe'    => 3,
+            'so_luong'      => 10,
             'gia_thue_xe'   => '29000000',
             'so_cho_ngoi'   => 2,
             'tien_phat'     => '2000000',
@@ -27,6 +28,7 @@ class CarSeeder extends Seeder
             'ten_xe'        => 'Bugatti Veyron',
             'anh_xe'        => 'Bugatti-Veyron.png',
             'ma_hang_xe'    => 3,
+            'so_luong'      => 10,
             'gia_thue_xe'   => '14000000',
             'so_cho_ngoi'   => 2,
             'tien_phat'     => '2000000',
@@ -36,8 +38,9 @@ class CarSeeder extends Seeder
         Car::create([
             'ten_xe'        => 'Chevrolet Corvette Stingray C8',
             'anh_xe'        => 'chevrolet-corvette-stingray-c8.png',
-            'ma_hang_xe'    => 3,
-            'gia_thue_xe'   => '3000000',
+            'ma_hang_xe'    => 6,
+            'so_luong'      => 10,
+            'gia_thue_xe'   => '12000000',
             'so_cho_ngoi'   => 2,
             'tien_phat'     => '2000000',
             'mo_ta'         => 'Thế hệ mới Chevrolet Corvette Stingray C8 ra mắt lần đầu tiên tháng 7/2019 tại Mỹ và nhanh chóng nhận được sự chào đón của các tín đồ yêu...'

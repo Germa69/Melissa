@@ -3,6 +3,15 @@
 @push('css')
     <!-- Datatable -->
     <link href="{{ asset('public/backend/vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+
+    <style>
+        @media (min-width: 576px) {
+            .modal-dialog {
+                max-width: 650px;
+                margin: 1.75rem auto;
+            }
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -20,7 +29,7 @@
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item active">
-                        <a href="{{ route('dashboard') }}"> 
+                        <a href="{{ route('dashboard') }}">
                             <i class="flaticon-141-home"></i>
                             Dashboard
                         </a>
@@ -39,11 +48,10 @@
                                     <tr>
                                         <th></th>
                                         <th>Tên xe</th>
-                                        <th>Hãng xe</th>
                                         <th>Giá thuê xe</th>
-                                        <th>Số chỗ ngồi</th>
                                         <th>Tiền phạt</th>
-                                        <th>Mô tả</th>
+                                        <th>Số lượng còn</th>
+                                        <th>Số lượng đã thuê</th>
                                         <th>Tình trạng</th>
                                         <th>Hành động</th>
                                     </tr>
@@ -56,23 +64,25 @@
                                                     src="{{ asset('public/uploads/car/' . $car->anh_xe) }}" alt="">
                                             </td>
                                             <td>{{ $car->ten_xe }}</td>
-                                            <td>{{ $car->brand->ten_hang_xe }}</td>
-                                            <td>{{ number_format($car->gia_thue_xe) }} $</td>
-                                            <td>{{ $car->so_cho_ngoi }}</td>
-                                            <td>{{ number_format($car->tien_phat) }} $</td>
-                                            <td>{{ $car->mo_ta }}</td>
+                                            <td>{{ number_format($car->gia_thue_xe, 0, ',', '.') }}</td>
+                                            <td>{{ number_format($car->tien_phat, 0, ',', '.') }}</td>
+                                            <td>{{ $car->so_luong }}</td>
+                                            <td>{{ $car->so_luong_da_thue }}</td>
                                             <td>
-                                                @if ($car->tinh_trang == 0)
-                                                    <span class="badge light badge-success">Còn xe</span>
-                                                @elseif($car->tinh_trang == 1)
-                                                    <span class="badge light badge-warning">Đã có người thuê</span>
-                                                @elseif($car->tinh_trang == 2)
-                                                    <span class="badge light badge-danger">Đang bảo dưỡng</span>
+                                                @if ($car->tinh_trang == 1)
+                                                    <span class="badge light badge-success">Còn xe [{{ $car->so_luong }} / {{ $car->so_luong + $car->so_luong_da_thue }}]</span>
+                                                @else
+                                                    <span class="badge light badge-warning">Đang bảo dưỡng</span>
                                                 @endif
                                             </td>
 
                                             <td>
                                                 <div class="d-flex" style="justify-content: center">
+                                                    <button type="button" class="btn btn-info shadow btn-xs sharp mr-1"
+                                                        data-toggle="modal"
+                                                        data-target="#modal-detail-{{ $car->ma }}"><i
+                                                            class="fa fa-info"></i></button>
+
                                                     <a href="{{ route('car.view_update', ['ma' => $car->ma]) }}"
                                                         class="btn btn-primary shadow btn-xs sharp mr-1"><i
                                                             class="fa fa-pencil"></i></a>
@@ -93,6 +103,8 @@
                                                 </div>
                                             </td>
                                         </tr>
+
+                                        @include('admin.car.view_detail')
                                     @endforeach
                                 </tbody>
                             </table>
