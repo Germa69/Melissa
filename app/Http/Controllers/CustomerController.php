@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Models\Customer;
-
+use App\Models\Contract;
+use App\Models\Car;
 
 class CustomerController
 {
@@ -59,15 +60,20 @@ class CustomerController
         $customer = Customer::where('email', $rq->email)->first();
 
         if (!empty($customer) && Hash::check($rq->mat_khau, $customer->mat_khau)) {
-            Session::put('ma_khach_hang', $customer->ma);
-            Session::put('ten_khach_hang', $customer->ten);
-            Session::put('anh_khach_hang', $customer->anh_khach_hang);
-            Session::put('so_dien_thoai', $customer->sdt);
-            Session::put('dia_chi', $customer->dia_chi);
-            Session::put('so_CMND', $customer->so_CMND);
+            if ($customer->tinh_trang == 0) {
+                Toastr::error('Tài khoản tạm thời bị khóa', 'Error');
+                return redirect()->route('home_page');
+            } else {
+                Session::put('ma_khach_hang', $customer->ma);
+                Session::put('ten_khach_hang', $customer->ten);
+                Session::put('anh_khach_hang', $customer->anh_khach_hang);
+                Session::put('so_dien_thoai', $customer->sdt);
+                Session::put('dia_chi', $customer->dia_chi);
+                Session::put('so_CMND', $customer->so_CMND);
 
-            Toastr::success('Đăng nhập thành công', 'Success');
-            return redirect()->route('home_page');
+                Toastr::success('Đăng nhập thành công', 'Success');
+                return redirect()->route('home_page');
+            }
         }
         else{
             Toastr::error('Email hoặc mật khẩu của bạn đã sai hoặc không tồn tại', 'Error');
@@ -131,11 +137,77 @@ class CustomerController
         }
     }
 
-    public function profile($ma)
+    public function profile(Request $rq, $ma)
     {
         $profile = Customer::find($ma);
+        $contract = Contract::find($ma);
 
-        return view('pages.customer.profile', ['profile' => $profile]);
+        if ($rq->ajax()) {
+            $ngay_thue    = $rq->ngay_thue;
+            $ngay_tra     = $rq->ngay_tra;
+            $tinh_trang   = $rq->tinh_trang;
+
+            if (!empty($ngay_thue) && !empty($ngay_tra) && !empty($tinh_trang)) {
+                $contracts = Contract::with('car')
+                ->with('customer')
+                ->whereBetween('ngay_thue', [$ngay_thue, $ngay_tra])
+                ->where('tinh_trang', $tinh_trang)
+                ->Where('ma_khach_hang', $ma)
+                ->get();
+            } else if (!empty($ngay_thue) && !empty($ngay_tra)) {
+                $contracts = Contract::with('car')
+                ->with('customer')
+                ->whereBetween('ngay_thue', [$ngay_thue, $ngay_tra])
+                ->Where('ma_khach_hang', $ma)
+                ->get();
+            } else if (!empty($tinh_trang)) {
+                $contracts = Contract::with('car')
+                ->with('customer')
+                ->where('tinh_trang', $tinh_trang)
+                ->Where('ma_khach_hang', $ma)
+                ->get();
+            } else {
+                $contracts = Contract::with('car')
+                ->with('customer')
+                ->Where('ma_khach_hang', $ma)
+                ->get();
+            }
+
+            return datatables()->of($contracts)
+                ->addIndexColumn()
+                ->addColumn('action', function ($contract) {
+                    $output = '';
+
+                    $output.='
+                    <div style="display: flex; justify-content: space-evenly">
+                        <button type="button"
+                            class="btn btn-primary btn-sm showContract" onclick="handleShowContract('.$contract->ma.')">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                        </button>
+                        ';
+                        if ($contract->tinh_trang == 2){
+                            $output.='
+                                <button type="button"
+                                    class="btn btn-danger btn-sm cancelContract" onclick="handleCancelContract('.$contract->ma.')">
+                                    <i class="fa fa-remove" aria-hidden="true"></i>
+                                </button>
+                            ';
+                        }else{
+                            $output.='';
+                        }
+                        $output.='
+                    </div>
+                ';
+                    return $output;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+        return view('pages.customer.profile', [
+            'profile' => $profile,
+            'contract' => $contract
+        ]);
     }
 
     public function profile_update(Request $rq, $ma)
@@ -225,14 +297,34 @@ class CustomerController
         }
     }
 
+    public function cancel_status_contract(Request $rq)
+    {
+        $data = $rq->all();
 
+        $contract               = Contract::find($data['ma']);
+        $contract->tinh_trang   = $data['contract_status'];
+        $contract->ly_do        = $data['reason'];
+        $contract->save();
 
-    public function hop_dong(){
-        $array_khach_hang = Customer::with('array_hop_dong')->get();
-        return view('view_khach_hang.hop_dong',[
-            'array_khach_hang'=>$array_khach_hang,
-        ]);
+        $car                    = Car::find($data['car_id']);
+
+        $khach_hang_da_dat      = $car->khach_hang_da_dat;
+
+        $length = strlen($khach_hang_da_dat);
+
+        if ($length > 0) {
+            $result = substr($khach_hang_da_dat, 0, -2);
+        }
+
+        $car->khach_hang_da_dat = $result;
+
+        $car_qty                = $car->so_luong;
+        $car_qty_rent           = $car->so_luong_da_thue;
+
+        $car_remain             = $car_qty  + $data['qty'];
+        $car->so_luong          = $car_remain;
+        $car->so_luong_da_thue  = $car_qty_rent - $data['qty'];
+        $car->save();
     }
-
 }
 

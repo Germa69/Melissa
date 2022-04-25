@@ -21,6 +21,7 @@ class Contract extends Model
         'tien_phat',
         'tien_coc',
         'tinh_trang',
+        'ma_admin',
         'ly_do'
     ];
 

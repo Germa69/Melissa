@@ -29,6 +29,7 @@ class HopDong extends Migration
             $table->string('tien_phat', 50);
             $table->string('tien_coc', 50);
             $table->integer('tinh_trang')->default('1');
+            $table->string('ma_admin', 50)->nullable();
             $table->text('ly_do')->nullable();
         });
     }

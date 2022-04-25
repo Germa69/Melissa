@@ -70,7 +70,13 @@
                                             <td>{{ $car->so_luong_da_thue }}</td>
                                             <td>
                                                 @if ($car->tinh_trang == 1)
-                                                    <span class="badge light badge-success">Còn xe [{{ $car->so_luong }} / {{ $car->so_luong + $car->so_luong_da_thue }}]</span>
+                                                    @if ($car->so_luong > $car->so_luong_da_thue)
+                                                        <span class="badge light badge-success">Còn xe [{{ $car->so_luong }} / {{ $car->so_luong + $car->so_luong_da_thue }}]</span>
+                                                    @elseif ($car->so_luong == $car->so_luong_da_thue)
+                                                        <span class="badge light badge-warning">Còn xe [{{ $car->so_luong }} / {{ $car->so_luong + $car->so_luong_da_thue }}]</span>
+                                                    @else
+                                                        <span class="badge light badge-danger">Còn xe [{{ $car->so_luong }} / {{ $car->so_luong + $car->so_luong_da_thue }}]</span>
+                                                    @endif
                                                 @else
                                                     <span class="badge light badge-warning">Đang bảo dưỡng</span>
                                                 @endif

@@ -60,8 +60,6 @@
                                         <select class="form-control default-select" name="tinh_trang">
                                             <option value="1" {{ $car->tinh_trang == 1 ? 'selected' : '' }}>Xe đang được
                                                 thuê</option>
-                                            {{-- <option value="2" {{ $car->tinh_trang == 2 ? 'selected' : '' }}>Đang bảo dưỡng
-                                            </option> --}}
                                         </select>
                                     @else
                                         <select class="form-control default-select" name="tinh_trang">

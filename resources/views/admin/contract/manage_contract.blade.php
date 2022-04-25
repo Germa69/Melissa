@@ -215,41 +215,4 @@
             });
         });
     </script>
-
-    {{-- <script>
-        function notificationDelte() {
-            swal("Hãy lên quyền Super Admin để thực hiện chức năng này!", "Vui lòng thử lại", "error");
-        }
-
-        function deletecontract(ma) {
-            var _token = $('input[name="_token"]').val();
-
-            swal({
-                title: "Bạn có chắc xóa không?",
-                text: "Bạn sẽ không thể khôi phục lại tệp này!",
-                type: "warning",
-                showCancelButton: true,
-                cancelButtonText: "Huỷ",
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Vâng, xóa nó!",
-                closeOnConfirm: false
-            }, function(isConfirm) {
-                if (!isConfirm) return;
-                $.ajax({
-                    url: '{{ route('contract.delete') }}',
-                    method: 'POST',
-                    data: {
-                        ma: ma,
-                        _token: _token
-                    },
-                    dataType: "html",
-                    success: function() {
-                        setTimeout(function() {
-                            location.reload();
-                        }, 1000)
-                    },
-                });
-            });
-        }
-    </script> --}}
 @endpush

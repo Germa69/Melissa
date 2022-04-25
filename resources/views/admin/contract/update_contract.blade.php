@@ -17,11 +17,12 @@
                             <div class="row gutters">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                     <div class="custom-actions-btns mb-4">
-                                        <a href="#" class="btn btn-primary">
+                                        {{-- <a href="#" class="btn btn-primary">
                                             <i class="icon-download"></i> Download
-                                        </a>
-                                        <a href="#" class="btn btn-secondary">
-                                            <i class="icon-printer"></i> Print
+                                        </a> --}}
+                                        <a href="{{ route('contract.print_contract', ['ma' => $contract->ma]) }}"
+                                            class="btn btn-secondary">
+                                            <i class="icon-printer"></i> In hợp đồng
                                         </a>
                                     </div>
                                 </div>
@@ -55,8 +56,8 @@
                                     <div class="invoice-details">
                                         <div class="invoice-num">
                                             <div>Hợp đồng - #{{ $contract->ma }}</div>
-                                            {{ \Carbon\Carbon::parse($contract->ngay_thue)->format('d/m/Y')}} -
-                                            {{ \Carbon\Carbon::parse($contract->ngay_tra)->format('d/m/Y')}}
+                                            {{ \Carbon\Carbon::parse($contract->ngay_thue)->format('d/m/Y') }} -
+                                            {{ \Carbon\Carbon::parse($contract->ngay_tra)->format('d/m/Y') }}
                                         </div>
                                     </div>
                                     <div class="invoice-details">
@@ -126,6 +127,8 @@
                                                                             value="{{ $contract->ma_khach_hang }}">
                                                                         <input type="hidden" name="so_luong"
                                                                             value="{{ $contract->so_luong }}">
+                                                                        <input type="hidden" name="ma_admin"
+                                                                            value="{{ Session::get('ma_admin') }}">
                                                                         <select
                                                                             class="form-control js-custom-select contract_status">
                                                                             <option id={{ $contract->ma }} selected
@@ -146,6 +149,8 @@
                                                                             value="{{ $contract->ma_khach_hang }}">
                                                                         <input type="hidden" name="so_luong"
                                                                             value="{{ $contract->so_luong }}">
+                                                                        <input type="hidden" name="ma_admin"
+                                                                            value="{{ Session::get('ma_admin') }}">
                                                                         <select
                                                                             class="form-control js-custom-select contract_status">
                                                                             <option id={{ $contract->ma }}
@@ -166,6 +171,8 @@
                                                                             value="{{ $contract->ma_khach_hang }}">
                                                                         <input type="hidden" name="so_luong"
                                                                             value="{{ $contract->so_luong }}">
+                                                                        <input type="hidden" name="ma_admin"
+                                                                            value="{{ Session::get('ma_admin') }}">
                                                                         <select
                                                                             class="form-control js-custom-select contract_status">
                                                                             <option id={{ $contract->ma }}
@@ -198,8 +205,8 @@
                                                                                     data-input>
                                                                                 <span class="label" id="error"
                                                                                     style="margin-top: 5px;
-                                                                                            width: 100%;
-                                                                                            border-radius: 5px;"></span>
+                                                                                                width: 100%;
+                                                                                                border-radius: 5px;"></span>
                                                                             </form>
                                                                         </div>
                                                                     </div>
@@ -254,7 +261,6 @@
     </script>
 
     <script type="text/javascript">
-
         // Cập nhật lại ngày trả thực tế
         $('.ngay_tra_thuc_te').change(function() {
             var ma = $('#ma').val();
@@ -309,6 +315,7 @@
             var car_id = $("input[name='ma_xe']").val();
             var customer_id = $("input[name='ma_khach_hang']").val();
             var qty = $("input[name='so_luong']").val();
+            var admin_id = $("input[name='ma_admin']").val();
 
             var _token = $('input[name="_token"]').val();
 
@@ -321,6 +328,7 @@
                     car_id: car_id,
                     customer_id: customer_id,
                     qty: qty,
+                    admin_id: admin_id,
                     _token: _token
                 },
                 success: function(data) {

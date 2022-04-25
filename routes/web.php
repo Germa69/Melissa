@@ -53,6 +53,7 @@ Route::group(['middleware' => 'CheckAdminLogin'], function (){
             Route::get('update-contract/{ma}', 'ContractController@update_contract')->name('update_contract');
             Route::post('update-status-contract' , 'ContractController@update_status_contract')->name('update_status_contract');
             Route::post('update-date-contract' , 'ContractController@update_date_contract')->name('update_date_contract');
+            Route::get('print-contract/{ma}', 'ContractController@print_contract')->name('print_contract');
         });
 
         Route::group(['prefix'=> 'user', 'as'=> 'user.'],function () {
@@ -101,35 +102,14 @@ Route::group(['prefix'=> 'customer', 'as' => 'customer.'], function() {
     Route::post('process_register','CustomerController@process_register')->name('process_register');
     Route::post('confirm-booking', 'ContractController@confirm_booking')->name('confirm_booking');
 
-    Route::group(['middleware' => 'CheckCustomerLogin'], function (){
+    Route::group(['middleware' => 'CheckCustomerLogin'], function () {
         Route::get('profile/{ma}', 'CustomerController@profile')->name('profile');
         Route::post('profile_update/{ma}', 'CustomerController@profile_update')->name('profile_update');
         Route::post('password_update/{ma}', 'CustomerController@password_update')->name('password_update');
         Route::post('image_update', 'CustomerController@image_update')->name('image_update');
+
+        Route::get('view_contract/{ma}', 'CustomerController@view_contract')->name('view_contract');
+        Route::post('cancel-status-contract' , 'CustomerController@cancel_status_contract')->name('cancel_status_contract');
     });
 });
-
-$controller = 'CustomerController';
-
-Route::group(['prefix'=>'view_khach_hang', 'as'=>'view_khach_hang.'], function() use ($controller){
-    Route::get('about_us','$controller@about_us')->name('about_us');
-    Route::get('blog_post_details','$controller@blog_post_details')->name('blog_post_details');
-    Route::get('blog_posts','$controller@blog_posts')->name('blog_posts');
-    Route::get('contact','$controller@contact')->name('contact');
-    Route::get('fleet','$controller@fleet')->name('fleet');
-    Route::get('','CustomerController@header')->name('header');
-    Route::get('offers','$controller@offers')->name('offers');
-    Route::get('team','$controller@team')->name('team');
-    Route::get('terms','$controller@terms')->name('terms');
-    Route::get('testimonials','$controller@testimonials')->name('testimonials');
-
-
-    route::get('hop_dong','$controller@hop_dong')->name('hop_dong');
-
-    route::get('view_all','$controller@view_all')->name('view_all');
-
-    Route::get('get_info_customer','$controller@get_info_customer')->name('get_info_customer');
-    Route::post('process_info_customer','$controller@process_info_customer')->name('process_info_customer');
-});
-
 

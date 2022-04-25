@@ -1,174 +1,48 @@
 @extends('layout')
 @push('css')
+    <link rel="stylesheet" href="{{ asset('public/backend/css/breadcrumbs.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/backend/css/profile.css') }}">
+
+    <!-- Datatable -->
+    <link href="{{ asset('public/backend/vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/themes/dark.css">
+
+    <!-- BEGIN: Select2 CSS-->
+    <link rel="stylesheet" type="text/css" href="{!! asset('public/backend/css/select2/select2-materialize.css') !!}">
+    <link rel="stylesheet" type="text/css" href="{!! asset('public/backend/css/select2/select2.min.css') !!}">
+    <link rel="stylesheet" type="text/css" href="{!! asset('public/backend/css/select2/form-select2.min.css') !!}">
+    <!-- END: Select2 CSS-->
+
     <style>
-        .breadcrumbs {
-            position: relative;
-            width: 100%;
-            float: left;
-            margin: 20px 0;
+        .select2-container .select2-selection--single {
+            height: 35px;
         }
 
-        .breadcrumbs>ul>li {
-            position: relative;
-            float: left;
-            transform: skewX(-15deg);
-            background-color: #fff;
-            box-shadow: -2px 0px 20px -6px rgba(0, 0, 0, 0.5);
-            z-index: 1;
-            width: 120px;
-            margin-left: -50px;
-            transition: all 0.5s;
-            list-style: none;
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 35px;
         }
 
-        .breadcrumbs>ul>li>a {
-            display: block;
-            padding: 5px;
-            font-size: 16px;
-            transform: skewX(15deg);
-            text-decoration: none;
-            color: #444;
-            font-weight: 300;
-            text-align: center;
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 35px;
         }
 
-        .breadcrumbs>ul>li:first-child {
-            margin-left: 0px;
+        .badge-success {
+            background-color: #ecfae4;
+            color: #68CF29;
+            padding: 7px;
         }
 
-        .breadcrumbs>ul>li:hover {
-            background-color: #CFD8DC;
+        .badge-danger {
+            background-color: #ffefee;
+            color: #FF4C41;
+            padding: 7px;
         }
 
-        .breadcrumbs>ul>li:last-child {
-            background-color: #78909C;
-        }
-
-        .breadcrumbs>ul>li:last-child>a {
-            color: #fff;
-            ;
-        }
-
-        .breadcrumbs>ul:hover>li {
-            margin-left: 0px;
-        }
-
-        .profile {
-            margin: 45px 0;
-        }
-
-        .emp-profile {
-            margin: 0 3%;
-            border-radius: 0.5rem;
-            background: #fff;
-        }
-
-        .profile-img {
-            text-align: center;
-        }
-
-        .profile-img img {
-            width: 100%;
-            height: 100%;
-        }
-
-        .profile-img .file {
-            position: relative;
-            overflow: hidden;
-            margin-top: -20%;
-            width: 70%;
-            border: none;
-            border-radius: 0;
-            font-size: 15px;
-            background: #212529b8;
-        }
-
-        .profile-img .file input {
-            position: absolute;
-            opacity: 0;
-            right: 0;
-            top: 0;
-        }
-
-        .profile-head h5 {
-            color: #333;
-        }
-
-        .profile-head h6 {
-            color: #0062cc;
-        }
-
-        .profile-edit-btn {
-            border: none;
-            border-radius: 1.5rem;
-            width: 12%;
-            padding: 10px;
-            font-weight: 600;
-            color: #6c757d;
-            cursor: pointer;
-        }
-
-        .profile-edit-btn:hover {
-            background-color: gainsboro;
-            color: teal;
-        }
-
-        .proile-rating {
-            font-size: 12px;
-            color: #818182;
-            margin-top: 5%;
-        }
-
-        .proile-rating span {
-            color: #495057;
-            font-size: 15px;
-            font-weight: 600;
-        }
-
-        .profile-head .nav-tabs {
-            margin-bottom: 5%;
-        }
-
-        .profile-head .nav-tabs .nav-link {
-            font-weight: 600;
-            border: none;
-        }
-
-        .profile-head .nav-tabs .nav-link.active {
-            border: none;
-            border-bottom: 2px solid #0062cc;
-        }
-
-        .profile-work {
-            padding: 14%;
-            margin-top: -15%;
-        }
-
-        .profile-work p {
-            font-size: 12px;
-            color: #818182;
-            font-weight: 600;
-            margin-top: 10%;
-        }
-
-        .profile-work a {
-            text-decoration: none;
-            color: #495057;
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        .profile-work ul {
-            list-style: none;
-        }
-
-        .profile-tab label {
-            font-weight: 600;
-        }
-
-        .profile-tab p {
-            font-weight: 600;
-            color: #0062cc;
+        .badge-warning {
+            background-color: #fff0da;
+            color: #FFAB2D;
+            padding: 7px;
         }
 
     </style>
@@ -202,8 +76,8 @@
                             <img src="{{ asset('public/uploads/customer/' . $profile->anh_khach_hang) }}" alt="" />
 
                             <div class="file btn btn-lg btn-primary">
-                                Change Photo
-                                <input type="file" name="file" id="file" data-customer_id={{ $profile->ma }}/>
+                                Thay đổi hình ảnh
+                                <input type="file" name="file" id="file" data-customer_id={{ $profile->ma }} />
                             </div>
                         </div>
                     </li>
@@ -217,6 +91,12 @@
                         <a href="" data-target-id="change-password">
                             <i class="fa fa-key"></i>
                             Đổi mật khẩu
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" data-target-id="history-contract">
+                            <i class="fa fa-suitcase"></i>
+                            Lịch sử đặt xe
                         </a>
                     </li>
                     <li>
@@ -335,7 +215,7 @@
                 </div>
             </div>
 
-            <div class="col-md-9  admin-content" id="change-password">
+            <div class="col-md-9 admin-content" id="change-password">
                 <form action="{{ route('customer.password_update', ['ma' => $profile->ma]) }}" method="post">
                     {{ csrf_field() }}
                     <div class="col-md-6">
@@ -391,11 +271,16 @@
                             </div>
                         </div>
                     </div>
-
                 </form>
             </div>
 
-            <div class="col-md-9  admin-content" id="logout">
+            <div class="col-md-9 admin-content" id="history-contract">
+                @include('pages.customer.history_contract')
+                @include('pages.customer.view_contract')
+                @include('pages.customer.cancel_contract')
+            </div>
+
+            <div class="col-md-9 admin-content" id="logout">
                 <div class="panel panel-info" style="margin: 1em;">
                     <div class="panel-heading">
                         <h3 class="panel-title">Confirm Logout</h3>
@@ -418,6 +303,120 @@
 @endsection
 
 @push('scripts')
+    <!-- Datatable -->
+    <script src="{{ asset('public/backend/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
+
+    <!-- BEGIN: Select2 JS-->
+    <script src="{!! asset('public/backend/js/select2/select2.full.min.js') !!}"></script>
+    <script src="{!! asset('public/backend/js/select2/form-select2.min.js') !!}"></script>
+    <!-- END: Select2 JS-->
+
+    <!--  Flatpickr  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.js"></script>
+
+    <script>
+        $(".resetDate").flatpickr({
+            wrap: true,
+            weekNumbers: true,
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            fill_datatable();
+
+            function fill_datatable(ngay_thue = '', ngay_tra = '', tinh_trang = '') {
+                $('#contractTable').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "oLanguage": {
+                        "sSearch": '<span class="fs-14">Tìm kiếm: </span> ',
+                        "sZeroRecords": "Không có dữ liệu nào trong bảng",
+                        "sLengthMenu": '<span class="fs-14">Hiển thị</span> <select>' +
+                            '<option value="10">10</option>' +
+                            '<option value="20">20</option>' +
+                            '<option value="30">30</option>' +
+                            '<option value="40">40</option>' +
+                            '<option value="50">50</option>' +
+                            '<option value="-1">Tất cả</option>' +
+                            '</select> <span class="fs-14">bản ghi</span>',
+                        "sInfo": "Hiển thị _START_ đến _END_ trong tổng số bản ghi là _TOTAL_",
+                        "sProcessing": 'Loading <i class="fa fa-spinner" style="transition: 2s;"></i>',
+                        "oPaginate": {
+                            "sNext": '<i class="fa fa-chevron-right"></i>',
+                            "sPrevious": '<i class="fa fa-chevron-left"></i>',
+                        }
+                    },
+                    dom: 'Blfrtip',
+                    buttons: [{
+                        extend: 'print',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+                        },
+                        text: '<i class="fas fa-print"></i> Print',
+                    }, ],
+                    ajax: {
+                        url: '{{ url('customer/profile/') . '/' . $profile->ma }}',
+                        data: {
+                            ngay_thue: ngay_thue,
+                            ngay_tra: ngay_tra,
+                            tinh_trang: tinh_trang
+                        }
+                    },
+                    columns: [{
+                            data: 'DT_RowIndex'
+                        },
+                        {
+                            data: 'customer.ten'
+                        },
+                        {
+                            data: 'car.ten_xe'
+                        },
+                        {
+                            data: 'ngay_thue'
+                        },
+                        {
+                            data: 'ngay_tra'
+                        },
+                        {
+                            data: 'tinh_trang',
+                            "render": function(data, type, row) {
+                                if (data == 1) {
+                                    return '<span class="badge light badge-warning">Đang chờ duyệt</span>';
+                                } else if (data == 2) {
+                                    return '<span class="badge light badge-success">Đã duyệt | Đang cho thuê</span>';
+                                } else {
+                                    return '<span class="badge light badge-danger">Hủy hợp đồng</span>'
+                                }
+                            }
+                        },
+                        {
+                            data: 'action',
+                            name: 'action',
+                            orderable: true,
+                            searchable: true,
+                        },
+                    ]
+                });
+            }
+
+            $('#filter').click(function() {
+                var ngay_thue = $('#ngay_thue').val();
+                var ngay_tra = $('#ngay_tra').val();
+                var tinh_trang = $('#tinh_trang').val();
+
+                if (ngay_thue !== '' && ngay_tra !== '' || tinh_trang !== '') {
+                    $('#contractTable').DataTable().destroy();
+                    fill_datatable(ngay_thue, ngay_tra, tinh_trang);
+                } else {
+                    alert('Hãy lựa chọn phù hợp để lọc');
+                    $('#contractTable').DataTable().destroy();
+                    fill_datatable(ngay_thue, ngay_tra, tinh_trang);
+                }
+            });
+        });
+    </script>
+
     <script>
         $(document).ready(function() {
             var navItems = $('.admin-menu li > a');
@@ -481,6 +480,83 @@
                     }
                 })
             }
+        });
+    </script>
+
+    <script type="text/javascript">
+        function handleShowContract(ma) {
+            $('#modal-show-contract-' + ma).modal('show');
+        }
+
+        function handleCancelContract(ma) {
+            $('#modal-cancel-contract-' + ma).modal('show');
+        }
+    </script>
+
+    <script>
+        $(document).ready(function() {
+
+            $('.cancel_contract').click(function() {
+                setTimeout(function() {
+                    var ma = $('#ma').val();
+                    $('#modal-cancel-contract-' + ma).modal('hide');
+                }, 500)
+
+                swal({
+                        title: "Xác nhận hủy đặt xe",
+                        text: "Bạn thật sự muốn hủy đặt xe này?",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonClass: "btn-success",
+                        confirmButtonText: "Vâng, hủy đặt!",
+                        cancelButtonText: "Đóng, suy nghĩ thêm",
+                        cancelButtonClass: "btn-danger",
+                        closeOnConfirm: false,
+                        closeOnCancel: false,
+                    },
+
+                    function(isConfirm) {
+                        if (isConfirm) {
+                            var ma = $('#ma').val();
+                            var contract_status = $('#contract_status').val();
+                            var car_id = $('#car_id').val();
+                            var customer_id = $('#customer_id').val();
+                            var qty = $('#contract_qty').val();
+                            var reason = $('#reason').val();
+                            var _token = $('input[name="_token"]').val();
+
+                            $.ajax({
+                                url: '{{ route('customer.cancel_status_contract') }}',
+                                method: 'POST',
+                                data: {
+                                    contract_status: contract_status,
+                                    ma: ma,
+                                    car_id: car_id,
+                                    customer_id: customer_id,
+                                    qty: qty,
+                                    reason: reason,
+                                    _token: _token
+                                },
+                                success: function(data) {
+                                    swal("Hoàn tất!", "Hủy hợp đồng thành công!",
+                                        "success");
+
+                                    setTimeout(function() {
+                                        location.reload();
+                                    }, 1000)
+                                }
+                            });
+                        } else {
+                            swal("Đóng", "Hủy hợp đồng thất bại!",
+                                "error");
+                            $('#reason').val('');
+                            // setTimeout(function() {
+                            //     var ma = $('#ma').val();
+                            //     $('#modal-cancel-contract-' + ma).modal('show');
+                            // }, 1500)
+                        }
+                    });
+            });
         });
     </script>
 @endpush

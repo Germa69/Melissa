@@ -89,19 +89,19 @@
                                 <span>Các mẫu xe này hợp lí với những chuyến đi du lịch hoặc những buổi đi chơi cùng với
                                     gia đình bạn </span>
                             </div>
-                            {{-- <div class="{{route('view_khach_hang.team')}}-thumb-actions"> --}}
-                            {{-- <a href="{{route('view_khach_hang.offers')}}" class="section-btn btn btn-primary btn-block">Xem thêm</a> --}}
+                            {{-- <div class="{{route('pages.team')}}-thumb-actions"> --}}
+                            {{-- <a href="{{route('pages.offers')}}" class="section-btn btn btn-primary btn-block">Xem thêm</a> --}}
                             {{-- </div> --}}
                         </div>
                     </div>
 
                     <div class="col-md-4 col-sm-6">
-                        <div class="{{ route('view_khach_hang.team') }}-thumb">
-                            <div class="{{ route('view_khach_hang.team') }}-image">
+                        <div class="{{ route('pages.team') }}-thumb">
+                            <div class="{{ route('pages.team') }}-image">
                                 <img src="{{ asset('public/frontend/images/offer-2-720x480.jpg') }}" class="img-responsive"
                                     alt="">
                             </div>
-                            <div class="{{ route('view_khach_hang.team') }}-info">
+                            <div class="{{ route('pages.team') }}-info">
                                 <h3>Các mẫu xe sang trọng</h3>
 
                                 <p class="lead"><small>Giá chỉ từ</small> <strong>$99</strong> <small>1
@@ -110,19 +110,19 @@
                                 <span>Các mẫu xe này hợp lí với những buổi ra mắt hoặc đám cưới và những buổi tiệc sang
                                     trọng, để bạn có thể gây ấn tượng với đối tác hoặc những người bạn</span>
                             </div>
-                            {{-- <div class="{{route('view_khach_hang.team')}}-thumb-actions"> --}}
-                            {{-- <a href="{{route('view_khach_hang.offers')}} " class="section-btn btn btn-primary btn-block">Xem thêm</a> --}}
+                            {{-- <div class="{{route('pages.team')}}-thumb-actions"> --}}
+                            {{-- <a href="{{route('pages.offers')}} " class="section-btn btn btn-primary btn-block">Xem thêm</a> --}}
                             {{-- </div> --}}
                         </div>
                     </div>
 
                     <div class="col-md-4 col-sm-6">
-                        <div class="{{ route('view_khach_hang.team') }}-thumb">
-                            <div class="{{ route('view_khach_hang.team') }}-image">
+                        <div class="{{ route('pages.team') }}-thumb">
+                            <div class="{{ route('pages.team') }}-image">
                                 <img src="{{ asset('public/frontend/images/offer-3-720x480.jpg') }}" class="img-responsive"
                                     alt="">
                             </div>
-                            <div class="{{ route('view_khach_hang.team') }}-info">
+                            <div class="{{ route('pages.team') }}-info">
                                 <h3>Các mẫu xe được ưa chuộng nhất</h3>
 
                                 <p class="lead"><small>Giá chỉ từ</small> <strong>$110</strong> <small>1
@@ -132,8 +132,8 @@
                                     lí tưởng cho những dịp đi du lịch cùng người yêu hoặc chở những người bạn đi lượn
                                     trên phố Hếu</span>
                             </div>
-                            {{-- <div class="{{route('view_khach_hang.team')}}-thumb-actions">
-                                <a href="{{route('view_khach_hang.offers')}} " class="section-btn btn btn-primary btn-block">Xem thêm</a>
+                            {{-- <div class="{{route('pages.team')}}-thumb-actions">
+                                <a href="{{route('pages.offers')}} " class="section-btn btn btn-primary btn-block">Xem thêm</a>
                             </div> --}}
                         </div>
                     </div>

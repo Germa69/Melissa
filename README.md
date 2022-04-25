@@ -65,12 +65,19 @@ Validate dữ liệu đầu vào
 Thêm check session khi login hệ thống
 Thêm profile cho người dùng
 Mật khẩu dùng phương thức Hash để mã hóa mật khẩu
+Khóa tài khoản khách hàng
+Cập nhật tình trạng đặt xe
+In ra hợp đồng thuê xe
+Check được số ngày trễ hẹn
 ```
 
 ## `Khách hàng`
 
 ```
 Thêm chỉnh sửa profile, đổi mật khẩu,...
+Đặt xe
+Lịch sử đặt xe
+Hủy đặt xe
 ```
 
 # Một số nguồn website lấy xe về thêm vào CSDL
