@@ -30,6 +30,8 @@ class BrandController extends Controller
                 $data = array();
 
                 $data['ten_hang_xe'] = $rq->ten_hang_xe;
+                $data['quoc_gia'] = $rq->quoc_gia;
+                $data['nam_thanh_lap'] = $rq->nam_thanh_lap;
 
                 $get_image = $rq->file('file');
                 $path         = 'public/uploads/brand/';
@@ -44,7 +46,7 @@ class BrandController extends Controller
                     $get_image->move($path, $new_image);
                     $data['logo']   = $new_image;
                 }
-        
+
                 Brand::create($data);
 
                 DB::commit();
@@ -75,6 +77,8 @@ class BrandController extends Controller
             $data = array();
 
             $data['ten_hang_xe'] = $rq->ten_hang_xe;
+            $data['quoc_gia'] = $rq->quoc_gia;
+            $data['nam_thanh_lap'] = $rq->nam_thanh_lap;
 
             $get_image = $rq->file('file');
             $path         = 'public/uploads/brand/';
@@ -93,7 +97,7 @@ class BrandController extends Controller
                 unlink($path.$brand->logo);
 
                 $brand->update($data);
-    
+
                 DB::commit();
                 Toastr::success('Cập nhật hãng xe thành công','Success');
                 return redirect()->route('brand.view_all');

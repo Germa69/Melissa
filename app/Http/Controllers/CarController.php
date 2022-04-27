@@ -63,8 +63,9 @@ class CarController
             } catch (\Throwable $th) {
                 DB::rollBack();
                 unlink($path.$new_image);
-                Toastr::error('Thêm xe thất bại', 'Error');
-                return redirect()->route('car.view_all');
+                // Toastr::error('Thêm xe thất bại', 'Error');
+                // return redirect()->route('car.view_all');
+                dd($th);
             }
         } else {
             Toastr::warning('Phương thức truyền vào không đúng', 'Warning');

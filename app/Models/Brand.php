@@ -11,7 +11,9 @@ class Brand extends Model
 
     protected $fillable = [
         'ten_hang_xe',
-        'logo'
+        'logo',
+        'quoc_gia',
+        'nam_thanh_lap',
     ];
 
     public $timestamps = false;

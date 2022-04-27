@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
         Admin::create([
             'ten'        => 'Nguyễn Đức Anh',
             'dia_chi'    => 'Hà Nội',
-            'sdt'        => '01288032567',
+            'sdt'        => '01288032678',
             'avatar'     => 'anh2.jpg',
             'email'      => 'sin1208@gmail.com',
             'mat_khau'   => bcrypt('123'),

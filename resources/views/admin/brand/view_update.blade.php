@@ -29,6 +29,14 @@
                                     <input type="text" name='ten_hang_xe' class="form-control input-default"
                                         placeholder="Tên hãng xe" value="{{ $brand->ten_hang_xe }}">
                                 </div>
+                                <div class="form-group">
+                                    <input type="text" name='quoc_gia' class="form-control input-default"
+                                        placeholder="Quốc gia" value="{{ $brand->quoc_gia }}">
+                                </div>
+                                <div class="form-group">
+                                    <input type="number" name='nam_thanh_lap' min="1000" max="2500" class="form-control input-default"
+                                        placeholder="Năm thành lập" value={{ $brand->nam_thanh_lap }}>
+                                </div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Tải lên</span>

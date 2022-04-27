@@ -40,6 +40,8 @@
                                         <th>#</th>
                                         <th>Tên hãng xe</th>
                                         <th>Logo</th>
+                                        <th>Quốc gia</th>
+                                        <th>Năm thành lập</th>
                                         <th>Hành động</th>
                                     </tr>
                                 </thead>
@@ -55,7 +57,8 @@
                                                 <img class="rounded-circle" width="35"
                                                     src="{{ asset('public/uploads/brand/' . $brand->logo) }}" alt="">
                                             </td>
-
+                                            <td>{{ $brand->quoc_gia }}</td>
+                                            <td>{{ $brand->nam_thanh_lap }}</td>
                                             <td>
                                                 <div class="d-flex">
                                                     <a href="{{ route('brand.view_update', ['ma' => $brand->ma]) }}" class="btn btn-primary shadow btn-xs sharp mr-1"><i

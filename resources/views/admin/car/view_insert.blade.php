@@ -45,7 +45,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="number" name="w" class="form-control input-default" min="1"
+                                    <input type="number" name="so_luong" class="form-control input-default" min="1"
                                         placeholder="Số lượng">
                                 </div>
                                 <div class="form-group">
