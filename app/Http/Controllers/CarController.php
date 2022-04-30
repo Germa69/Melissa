@@ -143,10 +143,10 @@ class CarController
             $car->delete();
             unlink($path.$car->anh_xe);
             DB::commit();
-            Toastr::success('Xóa thương hiệu thành công', 'Success');
+            Toastr::success('Xóa xe thành công', 'Success');
         } catch (\Throwable $th) {
             DB::rollBack();
-            Toastr::error('Xóa thương hiệu thất bại', 'Error');
+            Toastr::error('Xóa xe thất bại', 'Error');
         }
     }
 
